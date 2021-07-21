@@ -14,15 +14,6 @@ export function TaskList() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [newTaskTitle, setNewTaskTitle] = useState('');
 
-  function CreateRandomID() {
-
-    const min = 1;
-    const max = 999999;
-
-    return Math.floor(Math.random() * (max - min)) + min;
-
-  }
-
   function handleCreateNewTask() {
 
     if (newTaskTitle === undefined || newTaskTitle === '' || newTaskTitle === ' ') {
@@ -43,13 +34,13 @@ export function TaskList() {
 
   function handleToggleTaskCompletion(id: number) {
 
-    const changedTasks = [...tasks];
-
-    const indTask = changedTasks.findIndex(task => task.id === id);
+    const indTask = tasks.findIndex(task => task.id === id);
 
     if (indTask == -1) {
       return;
     }
+
+    const changedTasks = [...tasks];
 
     changedTasks[indTask].isComplete = !changedTasks[indTask].isComplete;
 
@@ -58,7 +49,28 @@ export function TaskList() {
   }
 
   function handleRemoveTask(id: number) {
-    // Remova uma task da listagem pelo ID
+
+    const indTask = tasks.findIndex(task => task.id === id);
+
+    if (indTask == -1) {
+      return;
+    }
+
+    const changedTasks = [...tasks];
+
+    changedTasks.splice(indTask, 1);
+
+    setTasks(changedTasks);
+
+  }
+
+  function CreateRandomID() {
+
+    const min = 1;
+    const max = 999999;
+
+    return Math.floor(Math.random() * (max - min)) + min;
+
   }
 
   return (
